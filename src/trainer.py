@@ -35,7 +35,7 @@ class TopClusTrainer(object):
         self.vocab = tokenizer.get_vocab()
         self.inv_vocab = {k:v for v, k in self.vocab.items()}
         self.filter_vocab()
-        self.data_dir = os.path.join("datasets", args.dataset)
+        self.data_dir = os.path.join(os.path.dirname(__file__), "..", "datasets", args.dataset)
         self.utils.create_dataset(self.data_dir, "texts.txt", "text.pt")
         data = self.load_dataset(self.data_dir, "text.pt")
         input_ids = data["input_ids"]
@@ -245,6 +245,8 @@ if __name__ == '__main__':
     torch.cuda.manual_seed_all(args.seed)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
+    print('**********')
+    print(os.getcwd())
 
     trainer = TopClusTrainer(args)
     
